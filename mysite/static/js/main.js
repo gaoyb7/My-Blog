@@ -33,7 +33,7 @@ $(document).ready(function() {
 				var count = data.count; 
 				var p = $('#tag-cloud-list'); 
 				for (var i = 0; i < tag_list.length; ++i) { 
-					p.append('<li><a ref="' + '/tag/' + tag_list[i] + '">' + 
+					p.append('<li><a href="' + '/tag/' + tag_list[i] + '">' + 
 						tag_list[i] + ' (' + count[i] + ')</a></li>'); 
 				} 
 			} 
