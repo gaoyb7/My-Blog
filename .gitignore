@@ -58,3 +58,4 @@ target/
 
 # Other
 mysite/mysite/settings.py
+mysite/static/ckeditor/
