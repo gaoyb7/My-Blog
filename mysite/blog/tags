@@ -1,0 +1,132 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+EmptyPage	views.py	/^from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger$/;"	i
+HttpResponse	views.py	/^from django.http import HttpResponseRedirect, HttpResponse, JsonResponse$/;"	i
+HttpResponseRedirect	views.py	/^from django.http import HttpResponseRedirect, HttpResponse, JsonResponse$/;"	i
+JsonResponse	views.py	/^from django.http import HttpResponseRedirect, HttpResponse, JsonResponse$/;"	i
+Meta	forms.py	/^    class Meta:$/;"	c	class:PostForm	inherits:
+Meta	models.py	/^    class Meta:$/;"	c	class:Post	inherits:
+Migration	migrations/0001_initial.py	/^class Migration(migrations.Migration):$/;"	c	inherits:migrations.Migration
+Migration	migrations/0002_auto_20151210_1108.py	/^class Migration(migrations.Migration):$/;"	c	inherits:migrations.Migration
+Migration	migrations/0003_auto_20151225_2036.py	/^class Migration(migrations.Migration):$/;"	c	inherits:migrations.Migration
+Migration	migrations/0004_remove_tag_tag_cn_name.py	/^class Migration(migrations.Migration):$/;"	c	inherits:migrations.Migration
+Migration	migrations/0005_auto_20151228_1422.py	/^class Migration(migrations.Migration):$/;"	c	inherits:migrations.Migration
+PageNotAnInteger	views.py	/^from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger$/;"	i
+Paginator	views.py	/^from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger$/;"	i
+Post	admin.py	/^from .models import Post, Tag$/;"	i
+Post	forms.py	/^from .models import Post$/;"	i
+Post	models.py	/^class Post(models.Model):$/;"	c	inherits:models.Model
+Post	views.py	/^from .models import Post$/;"	i
+PostForm	forms.py	/^class PostForm(forms.ModelForm):$/;"	c	inherits:forms.ModelForm
+PostForm	views.py	/^from .forms import PostForm$/;"	i
+Tag	admin.py	/^from .models import Post, Tag$/;"	i
+Tag	models.py	/^class Tag(models.Model):$/;"	c	inherits:models.Model
+User	models.py	/^from django.contrib.auth.models import User$/;"	i
+__str__	models.py	/^    def __str__(self):$/;"	m	class:Post	file:	access:private
+__str__	models.py	/^    def __str__(self):$/;"	m	class:Tag	file:	access:private
+about_me	views.py	/^def about_me(request):$/;"	f	access:public
+admin	admin.py	/^from django.contrib import admin$/;"	i
+ajax_get_test	views.py	/^def ajax_get_test(request):$/;"	f	access:public
+ajax_post_test	views.py	/^def ajax_post_test(request):$/;"	f	access:public
+author	models.py	/^    author = models.ForeignKey(User)$/;"	v	class:Post
+create_date	models.py	/^    create_date = models.DateTimeField(default=timezone.now)$/;"	v	class:Post
+custom_markdown	templatetags/custom_markdown.py	/^def custom_markdown(value):$/;"	f	access:public
+datetime	migrations/0001_initial.py	/^import datetime$/;"	i
+dependencies	migrations/0001_initial.py	/^    dependencies = [$/;"	v	class:Migration
+dependencies	migrations/0002_auto_20151210_1108.py	/^    dependencies = [$/;"	v	class:Migration
+dependencies	migrations/0003_auto_20151225_2036.py	/^    dependencies = [$/;"	v	class:Migration
+dependencies	migrations/0004_remove_tag_tag_cn_name.py	/^    dependencies = [$/;"	v	class:Migration
+dependencies	migrations/0005_auto_20151228_1422.py	/^    dependencies = [$/;"	v	class:Migration
+dislike	models.py	/^    dislike = models.IntegerField(default=0)$/;"	v	class:Post
+django	migrations/0002_auto_20151210_1108.py	/^import django.utils.timezone$/;"	i
+field	migrations/0002_auto_20151210_1108.py	/^            field=models.DateTimeField(default=django.utils.timezone.now),$/;"	v	class:Migration
+field	migrations/0003_auto_20151225_2036.py	/^            field=models.ManyToManyField(to='blog.Tag', max_length=50, blank=True),$/;"	v	class:Migration
+field	migrations/0005_auto_20151228_1422.py	/^            field=models.IntegerField(default=0),$/;"	v	class:Migration
+fields	forms.py	/^        fields = ['title', 'tag', 'text', ]$/;"	v	class:PostForm.Meta
+fields	migrations/0001_initial.py	/^            fields=[$/;"	v	class:Migration
+fields	migrations/0003_auto_20151225_2036.py	/^            fields=[$/;"	v	class:Migration
+force_text	templatetags/custom_markdown.py	/^from django.utils.encoding import force_text$/;"	i
+forms	forms.py	/^from django import forms$/;"	i
+forms	models.py	/^from django import forms$/;"	i
+get_object_or_404	views.py	/^from django.shortcuts import render, get_object_or_404, redirect$/;"	i
+get_tag_list	models.py	/^    def get_tag_list(self):$/;"	m	class:Post	access:public
+get_tag_list	views.py	/^def get_tag_list(resuest):$/;"	f	access:public
+include	urls.py	/^from django.conf.urls import patterns, include, url$/;"	i
+json	views.py	/^import json$/;"	i
+like	models.py	/^    like = models.IntegerField(default=0)$/;"	v	class:Post
+login_required	views.py	/^from django.contrib.auth.decorators import login_required$/;"	i
+main_page	views.py	/^def main_page(request):$/;"	f	access:public
+mark_safe	templatetags/custom_markdown.py	/^from django.utils.safestring import mark_safe$/;"	i
+markdown	templatetags/custom_markdown.py	/^import markdown$/;"	i
+migrations	migrations/0001_initial.py	/^from django.db import migrations, models$/;"	i
+migrations	migrations/0002_auto_20151210_1108.py	/^from django.db import migrations, models$/;"	i
+migrations	migrations/0003_auto_20151225_2036.py	/^from django.db import migrations, models$/;"	i
+migrations	migrations/0004_remove_tag_tag_cn_name.py	/^from django.db import migrations, models$/;"	i
+migrations	migrations/0005_auto_20151228_1422.py	/^from django.db import migrations, models$/;"	i
+model	forms.py	/^        model = Post$/;"	v	class:PostForm.Meta
+model_name	migrations/0002_auto_20151210_1108.py	/^            model_name='post',$/;"	v	class:Migration
+model_name	migrations/0003_auto_20151225_2036.py	/^            model_name='post',$/;"	v	class:Migration
+model_name	migrations/0004_remove_tag_tag_cn_name.py	/^            model_name='tag',$/;"	v	class:Migration
+model_name	migrations/0005_auto_20151228_1422.py	/^            model_name='post',$/;"	v	class:Migration
+models	migrations/0001_initial.py	/^from django.db import migrations, models$/;"	i
+models	migrations/0002_auto_20151210_1108.py	/^from django.db import migrations, models$/;"	i
+models	migrations/0003_auto_20151225_2036.py	/^from django.db import migrations, models$/;"	i
+models	migrations/0004_remove_tag_tag_cn_name.py	/^from django.db import migrations, models$/;"	i
+models	migrations/0005_auto_20151228_1422.py	/^from django.db import migrations, models$/;"	i
+models	models.py	/^from django.db import models$/;"	i
+name	migrations/0001_initial.py	/^            name='Post',$/;"	v	class:Migration
+name	migrations/0002_auto_20151210_1108.py	/^            name='create_date',$/;"	v	class:Migration
+name	migrations/0003_auto_20151225_2036.py	/^            name='Tag',$/;"	v	class:Migration
+name	migrations/0003_auto_20151225_2036.py	/^            name='post',$/;"	v	class:Migration
+name	migrations/0003_auto_20151225_2036.py	/^            name='tag',$/;"	v	class:Migration
+name	migrations/0004_remove_tag_tag_cn_name.py	/^            name='tag_cn_name',$/;"	v	class:Migration
+name	migrations/0005_auto_20151228_1422.py	/^            name='dislike',$/;"	v	class:Migration
+name	migrations/0005_auto_20151228_1422.py	/^            name='like',$/;"	v	class:Migration
+operations	migrations/0001_initial.py	/^    operations = [$/;"	v	class:Migration
+operations	migrations/0002_auto_20151210_1108.py	/^    operations = [$/;"	v	class:Migration
+operations	migrations/0003_auto_20151225_2036.py	/^    operations = [$/;"	v	class:Migration
+operations	migrations/0004_remove_tag_tag_cn_name.py	/^    operations = [$/;"	v	class:Migration
+operations	migrations/0005_auto_20151228_1422.py	/^    operations = [$/;"	v	class:Migration
+options	migrations/0003_auto_20151225_2036.py	/^            options={'ordering': ['-create_date']},$/;"	v	class:Migration
+ordering	models.py	/^        ordering = ['-create_date']$/;"	v	class:Post.Meta
+patterns	urls.py	/^from django.conf.urls import patterns, include, url$/;"	i
+post_detail	views.py	/^def post_detail(request, post_id):$/;"	f	access:public
+post_dislike	views.py	/^def post_dislike(request, post_id):$/;"	f	access:public
+post_draft_list	views.py	/^def post_draft_list(request):$/;"	f	access:public
+post_edit	views.py	/^def post_edit(request, post_id):$/;"	f	access:public
+post_like	views.py	/^def post_like(request, post_id):$/;"	f	access:public
+post_list	views.py	/^def post_list(request):$/;"	f	access:public
+post_new	views.py	/^def post_new(request):$/;"	f	access:public
+post_publish	views.py	/^def post_publish(request, post_id):$/;"	f	access:public
+post_remove	views.py	/^def post_remove(request, post_id):$/;"	f	access:public
+publish	models.py	/^    def publish(self):$/;"	m	class:Post	access:public
+published_date	models.py	/^    published_date = models.DateTimeField(blank=True, null=True)$/;"	v	class:Post
+redirect	views.py	/^from django.shortcuts import render, get_object_or_404, redirect$/;"	i
+register	templatetags/custom_markdown.py	/^register = template.Library()  #自定义filter时必须加上$/;"	v
+render	views.py	/^from django.shortcuts import render, get_object_or_404, redirect$/;"	i
+reverse	views.py	/^from django.core.urlresolvers import reverse$/;"	i
+settings	migrations/0001_initial.py	/^from django.conf import settings$/;"	i
+stringfilter	templatetags/custom_markdown.py	/^from django.template.defaultfilters import stringfilter$/;"	i
+tag	models.py	/^    tag = models.ManyToManyField(Tag, max_length=50, blank=True)$/;"	v	class:Post
+tag_name	models.py	/^    tag_name = models.CharField(max_length=50)$/;"	v	class:Tag
+template	templatetags/custom_markdown.py	/^from django import template$/;"	i
+text	models.py	/^    text = models.TextField()$/;"	v	class:Post
+timezone	migrations/0002_auto_20151210_1108.py	/^import django.utils.timezone$/;"	i
+timezone	models.py	/^from django.utils import timezone$/;"	i
+timezone	views.py	/^from django.utils import timezone$/;"	i
+title	models.py	/^    title = models.CharField(max_length=200)$/;"	v	class:Post
+unicode_literals	migrations/0001_initial.py	/^from __future__ import unicode_literals$/;"	i
+unicode_literals	migrations/0002_auto_20151210_1108.py	/^from __future__ import unicode_literals$/;"	i
+unicode_literals	migrations/0003_auto_20151225_2036.py	/^from __future__ import unicode_literals$/;"	i
+unicode_literals	migrations/0004_remove_tag_tag_cn_name.py	/^from __future__ import unicode_literals$/;"	i
+unicode_literals	migrations/0005_auto_20151228_1422.py	/^from __future__ import unicode_literals$/;"	i
+url	urls.py	/^from django.conf.urls import patterns, include, url$/;"	i
+urlpatterns	urls.py	/^urlpatterns = patterns('',$/;"	v
+utc	migrations/0001_initial.py	/^from django.utils.timezone import utc$/;"	i
+utils	migrations/0002_auto_20151210_1108.py	/^import django.utils.timezone$/;"	i
+views	urls.py	/^from . import views$/;"	i
+widgets	forms.py	/^        widgets = {$/;"	v	class:PostForm.Meta

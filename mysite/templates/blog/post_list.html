@@ -1,0 +1,53 @@
+{% extends 'blog/base.html' %}
+{% block title %}
+	Posts list
+{% endblock %}
+
+{% block blog-main %}
+	{% for post in contacts %}
+	<div class="row">
+		<div class="post-main">
+			<h2> <a href="{% url 'blog:post_detail' post_id=post.id %}" target="_blank">{{ post.title}}</a> </h2>
+			<p class="tag-list">
+				Tags: 
+				{% for tg in post.get_tag_list %}
+				<span class="label label-info">{{ tg }}</span>
+				{% endfor %}
+			</p>
+			<p> <p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }}</p> </p>
+			<hr>
+			<div class="post-body">
+				{{ post.text|safe|truncatewords_html:100 }}
+			</div>
+			<div align="right">
+				<a class="btn btn-link" href="{% url 'blog:post_detail' post_id=post.id %}" target="_blank"> Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+			</div>
+			<hr>
+		</div>
+	</div>
+	{% endfor %}
+	
+	<nav>
+		<ul class="pager">
+			{% if contacts.has_previous %}
+			<li class="previous"> <a href="?page={{ contacts.previous_page_number }}" class="btn btn-link">
+					<span aria-hidden="true">&larr;</span> Newer</a>
+			</li>
+			{% else %}
+			<li class="previous"> <a href="#" class="btn btn-link disabled">
+					<span aria-hidden="true">&larr;</span> Newer</a>
+			</li>
+			{% endif %}
+
+			{% if contacts.has_next %}
+			<li class="next"><a href="?page={{ contacts.next_page_number }}" class="btn btn-link">
+					Older <span aria-hidden="true">&rarr;</span></a>
+			</li>
+			{% else %}
+			<li class="next"><a href="#" class="btn btn-link disabled">
+					Older <span aria-hidden="true">&rarr;</span></a>
+			</li>
+			{% endif %}
+		</ul>
+	</nav>
+{% endblock %}

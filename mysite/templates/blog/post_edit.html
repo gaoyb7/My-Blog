@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+{% block blog-main %}
+<script src="//cdn.ckeditor.com/4.5.6/full/ckeditor.js"></script>
+{% if form %}
+{{ form.media }}
+{% endif %}
+<form method="POST">
+	{% csrf_token %}
+	{% for field in form %}
+	<div class="form-group">
+		{{ field.errors }}
+		{{ field.label_tag }}
+		{{ field }}
+	</div>
+	{% endfor %}
+	<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<script>
+CKEDITOR.replace('{{ form.text.name }}');
+</script>
+{% endblock %}

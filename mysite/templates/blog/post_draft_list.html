@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+{% block blog-main %}
+{% for post in posts %}
+<div class="row">
+	<div class="post-main">
+		<h2> <a href="{% url 'blog:post_detail' post_id=post.id %}">{{ post.title }}</a> </h2>
+		<p class="tag-list">
+		Tags: 
+		{% for tg in post.get_tag_list %}
+		<span class="label label-info">{{ tg }}</span>
+		{% endfor %}
+		</p>
+		<p> <p><span class="glyphicon glyphicon-time"></span> Created on {{ post.create_date }}</p> </p>
+
+		<hr>
+		<div class="post-body">
+			{{ post.text|safe|truncatewords_html:100 }}
+		</div>
+
+		<hr>
+		<div align="right">
+			<a class="btn btn-default" href="{% url 'blog:post_publish' post_id=post.id %}">Publish</a>
+			<a class="btn btn-default" href="{% url 'blog:post_edit' post_id=post.id %}">Edit</a>
+			<a class="btn btn-default" href="{% url 'blog:post_remove' post_id=post.id %}">Delete</a>
+		</div>
+	</div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'blog/base.html' %}
+{% block title %} Post - {{ post.title }} {% endblock %} 
+
+{% block blog-main %}
+<div class="row post-main">
+	{% if not post.published_date %}
+	<div class="alert alert-warning" role="alert">The article has not yet been released</div>
+	{% endif %}
+	<h1 class="blog-post-title"><a href="{% url 'blog:post_detail' post_id=post.id %}">{{ post.title }}</a></h1>
+
+	<p class="tag-list">
+		Tags: 
+		{% for tg in post.get_tag_list %}
+		<span class="label label-info">{{ tg }}</span>
+		{% endfor %}
+	</p>
+
+	{% if post.published_date %}
+	<p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }}</p>
+	{% else  %}
+	<p><span class="glyphicon glyphicon-time"></span> Created on {{ post.create_date }}</p>
+	{% endif %}
+
+	<hr>
+	<div>
+		<p> {{ post.text | safe }}</p>
+	</div>
+	<br>
+	<br>
+
+	<div align="right">
+		<a type="button" class="btn btn-success" id="like-post"> <span class="glyphicon glyphicon-thumbs-up"></span> {{ post.like }} </a>
+		<a type="button" class="btn btn-danger" id="dislike-post"> <span class="glyphicon glyphicon-thumbs-down"></span> {{ post.dislike }} </a>
+		<a href="#new-comment-modal" type="button" class="btn btn-primary" data-toggle="modal"> <span class="glyphicon glyphicon-comment"></span> comment</a>
+	</div>
+
+	{% if user.is_authenticated %}
+	<hr>
+	<div align="right">
+		{% if not post.published_date %}
+		<a class="btn btn-default" href="{% url 'blog:post_publish' post_id=post.id %}">Publish</a>
+		{% endif %}
+		<a class="btn btn-default" href="{% url 'blog:post_edit' post_id=post.id %}">Edit</a>
+		<a class="btn btn-default" href="{% url 'blog:post_remove' post_id=post.id %}">Delete</a>
+	</div>
+	{% endif %}
+
+	<div class="modal fade" id="new-comment-modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">New comment</h4>
+				</div>
+				<div class="modal-body">
+					<form method="POST">
+						{% csrf_token %}
+						{% for field in form %}
+						<div class="form-group">
+							{{ field.errors }}
+							{{ field.label_tag }}
+							{{ field }}
+						</div>
+						{% endfor %}
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function() {
+		$.ajaxSetup({
+			data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+		});
+
+		$('#like-post').click(function() {
+			$.post(window.location.pathname + "like", {}, function(data, status) {
+				if (status === "success") {
+					alert("Thank you")
+					$('#like-post').html('<span class="glyphicon glyphicon-thumbs-up"></span> ' + data);
+				}
+			});
+		});
+
+		$('#dislike-post').click(function() {
+			$.post(window.location.pathname + "dislike", {}, function(data, status) {
+				if (status === "success") {
+					alert("Thank you")
+					$('#dislike-post').html('<span class="glyphicon glyphicon-thumbs-down"></span> ' + data);
+				}
+			});
+		});
+	});
+</script>
+{% endblock %}
