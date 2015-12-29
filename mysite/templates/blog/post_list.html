@@ -7,7 +7,7 @@
 	{% for post in contacts %}
 	<div class="row">
 		<div class="post-main">
-			<h2> <a href="{% url 'blog:post_detail' post_id=post.id %}" target="_blank">{{ post.title}}</a> </h2>
+			<h2> <a href="{% url 'blog:post_detail' post_id=post.id %}">{{ post.title}}</a> </h2>
 			<p class="tag-list">
 				Tags: 
 				{% for tg in post.get_tag_list %}
@@ -20,7 +20,7 @@
 				{{ post.text|safe|truncatewords_html:100 }}
 			</div>
 			<div align="right">
-				<a class="btn btn-link" href="{% url 'blog:post_detail' post_id=post.id %}" target="_blank"> Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+				<a class="btn btn-link" href="{% url 'blog:post_detail' post_id=post.id %}"> Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 			</div>
 			<hr>
 		</div>

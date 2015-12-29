@@ -42,19 +42,22 @@ def get_tag_post_list(request, tagname):
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    if request.method == "POST":
+    form = CommentForm()
+    return render(request, 'blog/post_detail.html', {'post': post, 'form': form})
+
+def post_new_comment(request, post_id):
+    if request.method == 'POST':
+        post = get_object_or_404(Post, id=post_id)
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = post
             comment.submit()
-            new_form = CommentForm()
-            return render(request, 'blog/post_detail.html', {'post': post, 'form': new_form})
+            print("success")
+            return HttpResponse("success")
         else:
-            return render(request, 'blog/post_detail.html', {'post': post, 'form': form, })
-    else:
-        form = CommentForm()
-        return render(request, 'blog/post_detail.html', {'post': post, 'form': form})
+            print("error")
+            return HttpResponse("error")
 
 @login_required
 def post_new(request):
@@ -91,9 +94,6 @@ def post_publish(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     post.publish()
     return redirect('blog:post_detail', post_id=post.id)
-
-def post_new_comment(request, post_id):
-    pass
 
 def post_draft_list(request):
     posts = Post.objects.filter(published_date__isnull=True).order_by('-create_date')

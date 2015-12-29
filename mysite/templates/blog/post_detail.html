@@ -22,7 +22,7 @@
 	{% endif %}
 
 	<hr>
-	<div>
+	<div id="post-text">
 		<p> {{ post.text | safe }}</p>
 	</div>
 	<br>
@@ -53,16 +53,16 @@
 					<h4 class="modal-title">New comment</h4>
 				</div>
 				<div class="modal-body">
-					<form method="POST">
+					<form method="POST" id="new-comment" onsubmit="return false;">
 						{% csrf_token %}
 						{% for field in form %}
 						<div class="form-group">
-							{{ field.errors }}
+							{# {{ field.errors }} #}
 							{{ field.label_tag }}
 							{{ field }}
 						</div>
 						{% endfor %}
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<button class="btn btn-primary" id="comment-submit">Submit</button>
 					</form>
 				</div>
 			</div>
@@ -76,8 +76,50 @@
 			data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
 		});
 
+		$('#comment-submit').click(function() {
+			$('#new-comment span').remove();
+			$('#new-comment .form-group').removeClass('has-error');
+			var username = $('#id_username').val();
+			var email = $('#id_email').val();
+			var comment = $('#id_comment').val();
+			var valid = true;
+
+			if (username === "") {
+				$("#username").closest(".form-group").find("span").remove();
+				$('#id_username').closest('.form-group').addClass('has-error').append(
+						'<span class="help-block">Username field is empty</span>');
+				valid = false
+			}
+			if (email === "") {
+				$('#id_email').closest('.form-group').addClass('has-error').append(
+						'<span class="help-block">Email field is empty</span>');
+				valid = false
+			}
+			if (comment === "") {
+				$('#id_comment').closest('.form-group').addClass('has-error').append(
+						'<span class="help-block">Comment field is empty</span>');
+				valid = false
+			}
+
+			if (valid) {
+				var post_data = {
+					'username': username,
+					'email': email,
+					'comment': comment
+				};
+				$.post("{% url 'blog:post_new_comment' post_id=post.id %}", post_data, function(data, status) {
+					if (data === "success") {
+						window.location.href="{% url 'blog:post_detail' post_id=post.id %}";
+					} else {
+						$('#id_email').closest('.form-group').addClass('has-error').append(
+								'<span class="help-block">Please enter a valid email address.</span>');
+					}
+				});
+			}
+		});
+
 		$('#like-post').click(function() {
-			$.post(window.location.pathname + "like", {}, function(data, status) {
+			$.post("{% url 'blog:post_like' post_id=post.id %}", {}, function(data, status) {
 				if (status === "success") {
 					alert("Thank you")
 					$('#like-post').html('<span class="glyphicon glyphicon-thumbs-up"></span> ' + data);
@@ -86,13 +128,15 @@
 		});
 
 		$('#dislike-post').click(function() {
-			$.post(window.location.pathname + "dislike", {}, function(data, status) {
+			$.post("{% url 'blog:post_dislike' post_id=post.id %}", {}, function(data, status) {
 				if (status === "success") {
 					alert("Thank you")
 					$('#dislike-post').html('<span class="glyphicon glyphicon-thumbs-down"></span> ' + data);
 				}
 			});
 		});
+
+		$('#post-text table').addClass('table table-bordered');
 	});
 </script>
 {% endblock %}

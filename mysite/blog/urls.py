@@ -17,6 +17,7 @@ urlpatterns = patterns('',
                 url(r'^remove$', views.post_remove, name='post_remove'),
                 url(r'^like$', views.post_like, name='post_like'),
                 url(r'^dislike$', views.post_dislike, name='post_dislike'),
+                url(r'^new_comment$', views.post_new_comment, name="post_new_comment"),
                 ]
             )),
         url(r'^drafts$', views.post_draft_list, name='post_draft_list'),
