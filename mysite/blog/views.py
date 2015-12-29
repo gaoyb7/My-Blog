@@ -14,7 +14,6 @@ import json
 def main_page(request):
     return render(request, 'blog/main_page.html');
 
-
 # Posts
 def post_list(request):
     posts = Post.objects.filter(published_date__isnull=False).order_by('-published_date')
