@@ -6,7 +6,7 @@
 {% if form %}
 {{ form.media }}
 {% endif %}
-<form method="POST" tabindex="-1">
+<form method="POST" tabindex="0">
 	{% csrf_token %}
 	{% for field in form %}
 	<div class="form-group">

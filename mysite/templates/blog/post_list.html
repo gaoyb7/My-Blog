@@ -11,7 +11,7 @@
 			<p class="tag-list">
 				Tags: 
 				{% for tg in post.get_tag_list %}
-				<span class="label label-info">{{ tg }}</span>
+				<a href="{% url 'blog:get_tag_post_list' tagname=tg %}" style="text-decoration: none;"><span class="label label-info">{{ tg }}</span></a>
 				{% endfor %}
 			</p>
 			<p> <p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }}</p> </p>

@@ -14,7 +14,7 @@ Post - {{ post.title }}
 	<p class="tag-list">
 		Tags: 
 		{% for tg in post.get_tag_list %}
-		<span class="label label-info">{{ tg }}</span>
+		<a href="{% url 'blog:get_tag_post_list' tagname=tg %}" style="text-decoration: none;"><span class="label label-info">{{ tg }}</span></a>
 		{% endfor %}
 	</p>
 
@@ -34,7 +34,7 @@ Post - {{ post.title }}
 	<div align="right">
 		<a type="button" class="btn btn-success" id="like-post"> <span class="glyphicon glyphicon-thumbs-up"></span> {{ post.like }} </a>
 		<a type="button" class="btn btn-danger" id="dislike-post"> <span class="glyphicon glyphicon-thumbs-down"></span> {{ post.dislike }} </a>
-		<a href="#new-comment-modal" type="button" class="btn btn-primary" data-toggle="modal"> <span class="glyphicon glyphicon-comment"></span> comment</a>
+		<a href="#new-comment-modal" type="button" class="btn btn-primary" data-toggle="modal"> <span class="glyphicon glyphicon-comment"></span> Comment</a>
 	</div>
 
 	{% if user.is_authenticated %}
@@ -77,7 +77,7 @@ Post - {{ post.title }}
 		<hr>
 		{% for comment in comment_list %}
 		<div class="media">
-			<a class="pull-left" href="#">
+			<a class="pull-left" data-toggle="tooltip" data-placement="left" title="{{ comment.email }}">
 				<img class="media-object" src="{% static 'img/3frdQ2L.png' %}" alt="">
 			</a>
 			<div class="media-body">
