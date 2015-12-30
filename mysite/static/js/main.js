@@ -31,10 +31,11 @@ $(document).ready(function() {
 			if (status === "success") { 
 				var tag_list = data.tag_list; 
 				var count = data.count; 
+				var font_size = data.size;
 				var p = $('#tag-cloud-list'); 
 				for (var i = 0; i < tag_list.length; ++i) { 
-					p.append('<li><a href="' + '/tag/' + tag_list[i] + '">' + 
-						tag_list[i] + ' (' + count[i] + ')</a></li>'); 
+					var tag_node = '<a href="' + '/tag/' + tag_list[i] + '" style="font-size:' + font_size[i] + 'pt;">' + tag_list[i] + '</a> ';
+					p.append(tag_node);
 				} 
 			} 
 		}); 

@@ -16,6 +16,13 @@ footer {
 	background-color: #FFFFFF;
 }
 
+.comment-list {
+	padding: 15px;
+	margin-top: 15px;
+	border-radius: 4px;
+	background-color: #FFFFFF;
+}
+
 p.tag-list{
 	font-size: 15px;
 	font-family: Georgia, Times, "Times New Roman", serif;

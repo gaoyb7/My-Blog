@@ -1,5 +1,8 @@
 {% extends 'blog/base.html' %}
-{% block title %} Post - {{ post.title }} {% endblock %} 
+{% load staticfiles %}
+{% block title %} 
+Post - {{ post.title }} 
+{% endblock %} 
 
 {% block blog-main %}
 <div class="row post-main">
@@ -68,6 +71,26 @@
 			</div>
 		</div>
 	</div>
+
+	{% if comment_count > 0 %}
+	<div class="row comment-list">
+		<hr>
+		{% for comment in comment_list %}
+		<div class="media">
+			<a class="pull-left" href="#">
+				<img class="media-object" src="{% static 'img/3frdQ2L.png' %}" alt="">
+			</a>
+			<div class="media-body">
+				<h4 class="media-heading"> {{ comment.username }}
+					<small>{{ comment.date_time }}</small>
+				</h4>
+				{{ comment.comment }}
+			</div>
+		</div>
+		{% endfor %}
+		<hr>
+	</div>
+	{% endif  %}
 </div>
 
 <script>
@@ -82,26 +105,26 @@
 			var username = $('#id_username').val();
 			var email = $('#id_email').val();
 			var comment = $('#id_comment').val();
-			var valid = true;
+			var is_valid = true;
 
 			if (username === "") {
 				$("#username").closest(".form-group").find("span").remove();
 				$('#id_username').closest('.form-group').addClass('has-error').append(
 						'<span class="help-block">Username field is empty</span>');
-				valid = false
+				is_valid = false
 			}
 			if (email === "") {
 				$('#id_email').closest('.form-group').addClass('has-error').append(
 						'<span class="help-block">Email field is empty</span>');
-				valid = false
+				is_valid = false
 			}
 			if (comment === "") {
 				$('#id_comment').closest('.form-group').addClass('has-error').append(
 						'<span class="help-block">Comment field is empty</span>');
-				valid = false
+				is_valid = false
 			}
 
-			if (valid) {
+			if (is_valid) {
 				var post_data = {
 					'username': username,
 					'email': email,
@@ -121,7 +144,7 @@
 		$('#like-post').click(function() {
 			$.post("{% url 'blog:post_like' post_id=post.id %}", {}, function(data, status) {
 				if (status === "success") {
-					alert("Thank you")
+					alert("Thank you!")
 					$('#like-post').html('<span class="glyphicon glyphicon-thumbs-up"></span> ' + data);
 				}
 			});

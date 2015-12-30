@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.utils import timezone
-from .models import Post, Tag
+from .models import Post, Tag, Comment
 from .forms import PostForm, CommentForm
 import json
 
@@ -13,6 +13,7 @@ import json
 # Main Page
 def main_page(request):
     return render(request, 'blog/main_page.html');
+
 
 # Posts
 def post_list(request):
@@ -42,8 +43,14 @@ def get_tag_post_list(request, tagname):
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
+    post.visited += 1
+    post.save()
     form = CommentForm()
-    return render(request, 'blog/post_detail.html', {'post': post, 'form': form})
+
+    comment_list = Comment.objects.filter(post = post)
+    comment_count = len(comment_list)
+    return render(request, 'blog/post_detail.html', 
+            {'post': post, 'form': form, 'comment_list': comment_list, 'comment_count': comment_count})
 
 def post_new_comment(request, post_id):
     if request.method == 'POST':
@@ -129,20 +136,24 @@ def ajax_post_test(request):
     response_data['extra'] = 'one';
     return JsonResponse(response_data);
 
+
 # About Me
 def about_me(request):
     return render(request, 'blog/about.html', {})
+
 
 # Sidebar
 def get_tag_cloud_list(resuest):
     response_data = {};
     response_data['tag_list'] = [t.tag_name for t in Tag.objects.all()]
     response_data['count'] = [len(t.post_set.all()) for t in Tag.objects.all()]
+    max_font_size = max(response_data['count'])
+    response_data['size'] = [8.0 + 1.0 * sz / max_font_size * 10.0 for sz in response_data['count']]
     return JsonResponse(response_data)
 
 def get_recent_posts_list(request):
     response_data = {};
-    posts = Post.objects.filter(published_date__isnull=False).order_by('-published_date')[:5]
+    posts = Post.objects.filter(published_date__isnull=False).order_by('-published_date')[:8]
     response_data['title'] = [post.title for post in posts]
     response_data['id'] = [post.pk for post in posts]
     return JsonResponse(response_data)

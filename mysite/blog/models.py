@@ -22,6 +22,7 @@ class Post(models.Model):
 
     like = models.IntegerField(default=0)
     dislike = models.IntegerField(default=0)
+    visited = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
