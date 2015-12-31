@@ -14,7 +14,6 @@ import json
 def main_page(request):
     return render(request, 'blog/main_page.html');
 
-
 # Posts
 def post_list(request):
     posts = Post.objects.filter(published_date__isnull=False).order_by('-published_date')
@@ -30,7 +29,7 @@ def post_list(request):
 
 def get_tag_post_list(request, tagname):
     tag = Tag.objects.filter(tag_name=tagname)[0]
-    posts = tag.post_set.all()
+    posts = tag.post_set.filter(published_date__isnull=False).order_by('-published_date')
     paginator = Paginator(posts, 5)
     page = request.GET.get('page')
     try:
@@ -49,6 +48,10 @@ def post_detail(request, post_id):
 
     comment_list = Comment.objects.filter(post = post)
     comment_count = len(comment_list)
+    if request.user.is_authenticated():
+        for comment in comment_list:
+            comment.has_read = True
+            comment.save()
     return render(request, 'blog/post_detail.html', 
             {'post': post, 'form': form, 'comment_list': comment_list, 'comment_count': comment_count})
 
@@ -60,10 +63,8 @@ def post_new_comment(request, post_id):
             comment = form.save(commit=False)
             comment.post = post
             comment.submit()
-            print("success")
             return HttpResponse("success")
         else:
-            print("error")
             return HttpResponse("error")
 
 @login_required
@@ -124,6 +125,17 @@ def post_dislike(request, post_id):
         post.dislike += 1
         post.save()
         return HttpResponse(post.dislike)
+
+
+def recent_comments(request):
+    if request.method == "GET":
+        if request.user.is_authenticated():
+            if request.GET.get('action') == 'comments_count':
+                return HttpResponse(len(Comment.objects.filter(has_read=False)))
+            elif request.GET.get('action') == 'showlist':
+                comment_list = Comment.objects.filter(has_read=False)
+                return render(request, 'blog/recent_comments.html', {'comment_list': comment_list})
+
 
 
 # Test Menu

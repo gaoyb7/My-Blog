@@ -3,10 +3,6 @@ $(document).ready(function() {
 
 	$('[data-toggle="tooltip"]').tooltip();
 
-	$.ajaxSetup({
-		data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
-	});
-
 	$("#ajax-get-test").click(function() {
 		$.get("/ajax/get", function(data, status) {
 			alert("Data: " + data + "\nStatus: " + status);

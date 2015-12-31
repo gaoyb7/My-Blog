@@ -44,6 +44,7 @@ class Comment(models.Model):
     email = models.EmailField(max_length=254)
     comment = models.TextField()
     date_time = models.DateTimeField(default=timezone.now)
+    has_read = models.BooleanField(default=False)
 
     def __str__(self):
         return self.post.title + ' (' + self.username + ')'

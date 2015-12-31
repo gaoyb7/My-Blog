@@ -1,0 +1,26 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+{% block blog-main %}
+
+<div class="row comment-list">
+	{% for comment in comment_list %}
+	<hr>
+	<div class="media" id="comment-id-{{ comment.id }}" >
+		<a class="pull-left" data-toggle="tooltip" data-placement="left" title="{{ comment.email }}">
+			<img class="media-object" src="{% static 'img/3frdQ2L.png' %}" alt="">
+		</a>
+		<div class="media-body">
+			<h4 class="media-heading"> {{ comment.username }}
+				<small>{{ comment.date_time }}</small>
+			</h4>
+			{{ comment.comment }}
+		</div>
+		<div class="pull-right">
+			<a href="{% url 'blog:post_detail' post_id=comment.post.id %}">{{ comment.post }}</a>
+		</div>
+	</div>
+	{% endfor %}
+	<hr>
+</div>
+
+{% endblock %}

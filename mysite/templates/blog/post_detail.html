@@ -12,10 +12,10 @@ Post - {{ post.title }}
 	<h1 class="blog-post-title"><a href="{% url 'blog:post_detail' post_id=post.id %}">{{ post.title }}</a></h1>
 
 	<p class="tag-list">
-		Tags: 
-		{% for tg in post.get_tag_list %}
-		<a href="{% url 'blog:get_tag_post_list' tagname=tg %}" style="text-decoration: none;"><span class="label label-info">{{ tg }}</span></a>
-		{% endfor %}
+	Tags: 
+	{% for tg in post.get_tag_list %}
+	<a href="{% url 'blog:get_tag_post_list' tagname=tg %}" style="text-decoration: none;"><span class="label label-info">{{ tg }}</span></a>
+	{% endfor %}
 	</p>
 
 	{% if post.published_date %}
@@ -76,7 +76,7 @@ Post - {{ post.title }}
 	<div class="row comment-list">
 		<hr>
 		{% for comment in comment_list %}
-		<div class="media">
+		<div class="media" id="comment-id-{{ comment.id }}" >
 			<a class="pull-left" data-toggle="tooltip" data-placement="left" title="{{ comment.email }}">
 				<img class="media-object" src="{% static 'img/3frdQ2L.png' %}" alt="">
 			</a>
@@ -94,72 +94,69 @@ Post - {{ post.title }}
 </div>
 
 <script>
-	$(document).ready(function() {
-		$.ajaxSetup({
-			data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
-		});
+$(document).ready(function() {
+	$('#comment-submit').click(function() {
+		$('#new-comment span').remove();
+		$('#new-comment .form-group').removeClass('has-error');
+		var username = $('#id_username').val();
+		var email = $('#id_email').val();
+		var comment = $('#id_comment').val();
+		var is_valid = true;
 
-		$('#comment-submit').click(function() {
-			$('#new-comment span').remove();
-			$('#new-comment .form-group').removeClass('has-error');
-			var username = $('#id_username').val();
-			var email = $('#id_email').val();
-			var comment = $('#id_comment').val();
-			var is_valid = true;
+		if (username === "") {
+			$("#username").closest(".form-group").find("span").remove();
+			$('#id_username').closest('.form-group').addClass('has-error').append(
+				'<span class="help-block">Username field is empty</span>');
+			is_valid = false
+		}
+		if (email === "") {
+			$('#id_email').closest('.form-group').addClass('has-error').append(
+				'<span class="help-block">Email field is empty</span>');
+			is_valid = false
+		}
+		if (comment === "") {
+			$('#id_comment').closest('.form-group').addClass('has-error').append(
+				'<span class="help-block">Comment field is empty</span>');
+			is_valid = false
+		}
 
-			if (username === "") {
-				$("#username").closest(".form-group").find("span").remove();
-				$('#id_username').closest('.form-group').addClass('has-error').append(
-						'<span class="help-block">Username field is empty</span>');
-				is_valid = false
-			}
-			if (email === "") {
-				$('#id_email').closest('.form-group').addClass('has-error').append(
-						'<span class="help-block">Email field is empty</span>');
-				is_valid = false
-			}
-			if (comment === "") {
-				$('#id_comment').closest('.form-group').addClass('has-error').append(
-						'<span class="help-block">Comment field is empty</span>');
-				is_valid = false
-			}
-
-			if (is_valid) {
-				var post_data = {
-					'username': username,
-					'email': email,
-					'comment': comment
-				};
-				$.post("{% url 'blog:post_new_comment' post_id=post.id %}", post_data, function(data, status) {
-					if (data === "success") {
-						window.location.href="{% url 'blog:post_detail' post_id=post.id %}";
-					} else {
-						$('#id_email').closest('.form-group').addClass('has-error').append(
-								'<span class="help-block">Please enter a valid email address.</span>');
-					}
-				});
-			}
-		});
-
-		$('#like-post').click(function() {
-			$.post("{% url 'blog:post_like' post_id=post.id %}", {}, function(data, status) {
-				if (status === "success") {
-					alert("Thank you!")
-					$('#like-post').html('<span class="glyphicon glyphicon-thumbs-up"></span> ' + data);
+		if (is_valid) {
+			var post_data = {
+				'csrfmiddlewaretoken': '{{ csrf_token }}',
+				'username': username,
+				'email': email,
+				'comment': comment
+			};
+			$.post("{% url 'blog:post_new_comment' post_id=post.id %}", post_data, function(data, status) {
+				if (data === "success") {
+					window.location.href="{% url 'blog:post_detail' post_id=post.id %}";
+				} else {
+					$('#id_email').closest('.form-group').addClass('has-error').append(
+						'<span class="help-block">Please enter a valid email address.</span>');
 				}
 			});
-		});
-
-		$('#dislike-post').click(function() {
-			$.post("{% url 'blog:post_dislike' post_id=post.id %}", {}, function(data, status) {
-				if (status === "success") {
-					alert("Thank you")
-					$('#dislike-post').html('<span class="glyphicon glyphicon-thumbs-down"></span> ' + data);
-				}
-			});
-		});
-
-		$('#post-text table').addClass('table table-bordered');
+		}
 	});
+
+	$('#like-post').click(function() {
+		var post_data = {'csrfmiddlewaretoken': '{{ csrf_token }}'};
+		$.post("{% url 'blog:post_like' post_id=post.id %}", post_data, function(data, status) {
+			if (status === "success") {
+				$('#like-post').html('<span class="glyphicon glyphicon-thumbs-up"></span> ' + data);
+			}
+		});
+	});
+
+	$('#dislike-post').click(function() {
+		var post_data = {'csrfmiddlewaretoken': '{{ csrf_token }}'};
+		$.post("{% url 'blog:post_dislike' post_id=post.id %}", post_data, function(data, status) {
+			if (status === "success") {
+				$('#dislike-post').html('<span class="glyphicon glyphicon-thumbs-down"></span> ' + data);
+			}
+		});
+	});
+
+	$('#post-text table').addClass('table table-bordered');
+});
 </script>
 {% endblock %}

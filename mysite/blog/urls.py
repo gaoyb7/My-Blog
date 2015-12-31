@@ -9,6 +9,7 @@ urlpatterns = patterns('',
         url(r'^post/new$', views.post_new, name='post_new'),
         url(r'^post/get_tag_cloud_list$', views.get_tag_cloud_list, name='get_tag_cloud_list'),
         url(r'^post/get_recent_posts_list$', views.get_recent_posts_list, name='get_recent_posts_list'),
+        url(r'^post/recent_comments$', views.recent_comments, name='recent_comments'),
         url(r'^post/(?P<post_id>[0-9]+)/', include(
             [
                 url(r'^$', views.post_detail, name='post_detail'),
