@@ -23,5 +23,6 @@ urlpatterns = patterns('',
             )),
         url(r'^drafts$', views.post_draft_list, name='post_draft_list'),
         url(r'^about$', views.about_me, name="about_me"),
+        url(r'^message_board$', views.message_board, name="message_board"),
         url(r'^tag/(?P<tagname>\w+)$', views.get_tag_post_list, name="get_tag_post_list")
         )

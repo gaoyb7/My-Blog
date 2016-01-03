@@ -7,14 +7,16 @@
 	{% for post in contacts %}
 	<div class="row">
 		<div class="post-main">
-			<h2> <a href="{% url 'blog:post_detail' post_id=post.id %}">{{ post.title}}</a> </h2>
-			<p class="tag-list">
+			<div class="post-header">
+				<h2> <a href="{% url 'blog:post_detail' post_id=post.id %}">{{ post.title}}</a> </h2>
+				<p class="tag-list">
 				Tags: 
 				{% for tg in post.get_tag_list %}
 				<a href="{% url 'blog:get_tag_post_list' tagname=tg %}" style="text-decoration: none;"><span class="label label-info">{{ tg }}</span></a>
 				{% endfor %}
-			</p>
-			<p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }}</p>
+				</p>
+				<p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }}</p>
+			</div>
 			<hr>
 			<div class="post-body">
 				{{ post.text|safe|truncatewords_html:100 }}

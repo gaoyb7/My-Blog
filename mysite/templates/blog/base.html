@@ -60,14 +60,14 @@
 							</ul>
 						</li>
 						{% endif %}
+						<li><a href="{% url 'blog:message_board' %}">Message Board</a></li>
 						<li><a href="{% url 'blog:about_me' %}">About</a></li>
-						<li><a href="#">Contact</a></li>
 					</ul>
 
 					<ul class="nav navbar-nav navbar-right">
 						{% if user.is_authenticated %}
 						<li>
-							<a href="/post/recent_comments?action=showlist" data-tooltip="toolip" data-placement="left" title="Messages" id="recent-comments">
+							<a href="/post/recent_comments?action=showlist" data-tooltip="toolip" data-placement="left" title="Comments" id="recent-comments">
 								<span class="glyphicon glyphicon-comment"></span>
 							</a>
 						</li>

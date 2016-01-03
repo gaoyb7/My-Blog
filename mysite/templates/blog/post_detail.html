@@ -6,23 +6,26 @@ Post - {{ post.title }}
 
 {% block blog-main %}
 <div class="row post-main">
-	{% if not post.published_date %}
-	<div class="alert alert-warning" role="alert">The article has not yet been released</div>
-	{% endif %}
-	<h1 class="blog-post-title"><a href="{% url 'blog:post_detail' post_id=post.id %}">{{ post.title }}</a></h1>
 
-	<p class="tag-list">
-	Tags: 
-	{% for tg in post.get_tag_list %}
-	<a href="{% url 'blog:get_tag_post_list' tagname=tg %}" style="text-decoration: none;"><span class="label label-info">{{ tg }}</span></a>
-	{% endfor %}
-	</p>
+	<div class="post-header">
+		{% if not post.published_date %}
+		<div class="alert alert-warning" role="alert">The article has not yet been released</div>
+		{% endif %}
+		<h1 class="blog-post-title"><a href="{% url 'blog:post_detail' post_id=post.id %}">{{ post.title }}</a></h1>
 
-	{% if post.published_date %}
-	<p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }}</p>
-	{% else  %}
-	<p><span class="glyphicon glyphicon-time"></span> Created on {{ post.create_date }}</p>
-	{% endif %}
+		<p class="tag-list">
+		Tags: 
+		{% for tg in post.get_tag_list %}
+		<a href="{% url 'blog:get_tag_post_list' tagname=tg %}" style="text-decoration: none;"><span class="label label-info">{{ tg }}</span></a>
+		{% endfor %}
+		</p>
+
+		{% if post.published_date %}
+		<p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }}</p>
+		{% else  %}
+		<p><span class="glyphicon glyphicon-time"></span> Created on {{ post.create_date }}</p>
+		{% endif %}
+	</div>
 
 	<hr>
 	<div id="post-text">
@@ -103,22 +106,16 @@ $(document).ready(function() {
 		var comment = $('#id_comment').val();
 		var is_valid = true;
 
-		if (username === "") {
-			$("#username").closest(".form-group").find("span").remove();
-			$('#id_username').closest('.form-group').addClass('has-error').append(
-				'<span class="help-block">Username field is empty</span>');
-			is_valid = false
-		}
-		if (email === "") {
-			$('#id_email').closest('.form-group').addClass('has-error').append(
-				'<span class="help-block">Email field is empty</span>');
-			is_valid = false
-		}
-		if (comment === "") {
-			$('#id_comment').closest('.form-group').addClass('has-error').append(
-				'<span class="help-block">Comment field is empty</span>');
-			is_valid = false
-		}
+		$('.form-group').map(function(id, p) {
+			var lab = $(p).find('label');
+			var ele = $('#'+lab.attr('for'));
+
+			if (ele.val().trim() === "") {
+				$(p).addClass('has-error').append(
+						'<span class="help-block">' + $(lab).attr('for').substring(3) + ' field is empty</span>');
+				is_valid = false;
+			}
+		});
 
 		if (is_valid) {
 			var post_data = {

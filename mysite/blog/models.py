@@ -10,7 +10,6 @@ class Tag(models.Model):
     def __str__(self):
         return self.tag_name
 
-
 class Post(models.Model):
     author = models.ForeignKey(User)
     title = models.CharField(max_length=200)
@@ -48,6 +47,23 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.post.title + ' (' + self.username + ')'
+
+    def submit(self):
+        self.date_time = timezone.now()
+        self.save()
+
+    class Meta:
+        ordering = ['-date_time']
+
+
+class Message(models.Model):
+    username = models.CharField(max_length=50)
+    email = models.EmailField(max_length=254)
+    message = models.TextField()
+    date_time = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.username + ' ' + self.email
 
     def submit(self):
         self.date_time = timezone.now()

@@ -1,12 +1,17 @@
 body {
     padding-top: 70px;
-	font-family: Helvetica, Arial, sans-serif;
+    font-family: Arial, Sans-Serif;
+	/*font-family: Helvetica, Arial, sans-serif;*/
 	color: #555;
 	/*background-color: #DDDDDD;*/
 }
 
 footer {
     margin: 50px;
+}
+
+.post-header, .well h4 {
+    font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 .post-main, .post-edit, .login-block {

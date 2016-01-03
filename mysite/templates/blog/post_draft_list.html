@@ -3,14 +3,17 @@
 {% for post in posts %}
 <div class="row">
 	<div class="post-main">
-		<h2> <a href="{% url 'blog:post_detail' post_id=post.id %}">{{ post.title }}</a> </h2>
-		<p class="tag-list">
-		Tags: 
-		{% for tg in post.get_tag_list %}
-		<span class="label label-info">{{ tg }}</span>
-		{% endfor %}
-		</p>
-		<p> <p><span class="glyphicon glyphicon-time"></span> Created on {{ post.create_date }}</p> </p>
+
+		<div class="post-header">
+			<h2> <a href="{% url 'blog:post_detail' post_id=post.id %}">{{ post.title }}</a> </h2>
+			<p class="tag-list">
+			Tags: 
+			{% for tg in post.get_tag_list %}
+			<span class="label label-info">{{ tg }}</span>
+			{% endfor %}
+			</p>
+			<p> <p><span class="glyphicon glyphicon-time"></span> Created on {{ post.create_date }}</p> </p>
+		</div>
 
 		<hr>
 		<div class="post-body">

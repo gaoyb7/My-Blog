@@ -4,8 +4,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.utils import timezone
-from .models import Post, Tag, Comment
-from .forms import PostForm, CommentForm
+from .models import Post, Tag, Comment, Message
+from .forms import PostForm, CommentForm, MessageForm
 import json
 
 # Create your views here.
@@ -105,8 +105,7 @@ def post_publish(request, post_id):
 
 def post_draft_list(request):
     posts = Post.objects.filter(published_date__isnull=True).order_by('-create_date')
-    return render(request, 'blog/post_draft_list.html', {'posts': posts})
-
+    return render(request, 'blog/post_draft_list.html', {'posts': posts}) 
 def post_remove(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     post.delete()
@@ -151,7 +150,20 @@ def ajax_post_test(request):
 
 # About Me
 def about_me(request):
-    return render(request, 'blog/about.html', {})
+    return render(request, 'blog/about.html')
+
+# Message Board
+def message_board(request):
+    messages = Message.objects.all().order_by('-date_time');
+    if request.method == "POST":
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            msg = form.save(commit=False)
+            msg.submit()
+            return render(request, 'blog/message_board.html', {'form': MessageForm(), 'messages': messages})
+    else:
+        form = MessageForm()
+    return render(request, 'blog/message_board.html', {'form': form, 'messages': messages})
 
 
 # Sidebar
