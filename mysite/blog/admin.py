@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import Post, Tag, Comment, Message
-from pagedown.widgets import AdminPagedownWidget
 from django import forms
 from django.db import models
 

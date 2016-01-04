@@ -1,6 +1,6 @@
 from django import forms
 from .models import Post, Comment, Message
-from pagedown.widgets import PagedownWidget
+from bootstrap_markdown.widgets import MarkdownEditor
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -9,7 +9,6 @@ class PostForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
-            #'text': PagedownWidget(attrs={'class': 'form-control'}),
             'text': forms.Textarea(attrs={'class': 'form-control'}),
         }
 

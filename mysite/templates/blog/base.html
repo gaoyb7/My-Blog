@@ -12,12 +12,15 @@
 	<link href="//cdn.bootcss.com/highlight.js/8.9.1/styles/github.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="{% static 'css/blog.css' %}">
 	<!--<link rel='stylesheet' id='twentytwelve-fonts-css'  href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />-->
-
 	<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 	<script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<script src="//cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 	<script src="//cdn.bootcss.com/highlight.js/9.0.0/highlight.min.js"></script>
-	<script src="//cdn.bootcss.com/jquery.sticky/1.0.3/jquery.sticky.js"></script>
+	<script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+		tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+	});
+	</script>
 	<script src="{% static 'js/main.js' %}"></script>
 </head>
 
