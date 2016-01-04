@@ -10,7 +10,7 @@ footer {
     margin: 50px;
 }
 
-.post-header, .well h4 {
+.post-header, .well h4, .panel-title {
     font-family: Georgia, "Times New Roman", Times, serif;
 }
 
@@ -19,6 +19,10 @@ footer {
 	margin: 10px;
 	border-radius: 4px;
 	background-color: #FFFFFF;
+}
+
+#recent-posts-list>li {
+    border-bottom: 1px dotted #ccc;
 }
 
 .comment-list {
