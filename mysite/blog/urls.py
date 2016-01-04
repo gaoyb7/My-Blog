@@ -1,7 +1,8 @@
 from django.conf.urls import patterns, include, url
 from . import views
 
-urlpatterns = patterns('',
+app_name = 'blog'
+urlpatterns = [
         url(r'^$', views.main_page, name='main_page'),
         url(r'^ajax/get', views.ajax_get_test, name='ajax_get_test'),
         url(r'^ajax/post', views.ajax_post_test, name='ajax_post_test'),
@@ -24,5 +25,5 @@ urlpatterns = patterns('',
         url(r'^drafts$', views.post_draft_list, name='post_draft_list'),
         url(r'^about$', views.about_me, name="about_me"),
         url(r'^message_board$', views.message_board, name="message_board"),
-        url(r'^tag/(?P<tagname>\w+)$', views.get_tag_post_list, name="get_tag_post_list")
-        )
+        url(r'^tag/(?P<tagname>\w+)$', views.get_tag_post_list, name="get_tag_post_list"),
+        ]
