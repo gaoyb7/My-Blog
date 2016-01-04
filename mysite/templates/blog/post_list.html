@@ -16,7 +16,7 @@
 				<a href="{% url 'blog:get_tag_post_list' tagname=tg %}" style="text-decoration: none;"><span class="label label-info">{{ tg }}</span></a>
 				{% endfor %}
 				</p>
-				<p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }}</p>
+				<p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }} <span class="pull-right">Visited: {{ post.visited }}</span></p>
 			</div>
 			<hr>
 			<div class="post-body">

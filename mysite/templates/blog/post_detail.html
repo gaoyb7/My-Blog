@@ -22,7 +22,7 @@ Post - {{ post.title }}
 		</p>
 
 		{% if post.published_date %}
-		<p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }}</p>
+		<p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }}<span class="pull-right">Visited: {{ post.visited }}</span></p>
 		{% else  %}
 		<p><span class="glyphicon glyphicon-time"></span> Created on {{ post.create_date }}</p>
 		{% endif %}
