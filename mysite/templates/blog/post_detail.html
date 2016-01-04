@@ -1,8 +1,9 @@
 {% extends 'blog/base.html' %}
 {% load staticfiles %}
-{% block title %} 
-Post - {{ post.title }} 
-{% endblock %} 
+{% load custom_markdown %}
+{% block title %}
+Post - {{ post.title }}
+{% endblock %}
 
 {% block blog-main %}
 <div class="row post-main">
@@ -14,7 +15,7 @@ Post - {{ post.title }}
 		<h1 class="blog-post-title"><a href="{% url 'blog:post_detail' post_id=post.id %}">{{ post.title }}</a></h1>
 
 		<p class="tag-list">
-		Tags: 
+		Tags:
 		{% for tg in post.get_tag_list %}
 		<a href="{% url 'blog:get_tag_post_list' tagname=tg %}" style="text-decoration: none;"><span class="label label-info">{{ tg }}</span></a>
 		{% endfor %}
@@ -29,7 +30,7 @@ Post - {{ post.title }}
 
 	<hr>
 	<div id="post-text">
-		<p> {{ post.text | safe }}</p>
+		<p> {{ post.text | custom_markdown }}</p>
 	</div>
 	<br>
 	<br>
