@@ -5,8 +5,8 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.utils import timezone
 from .models import Post, Tag, Comment, Message
-from .forms import PostForm, CommentForm, MessageForm
-import json
+from .forms import PostForm, CommentForm, MessageForm, UploadFileForm
+import json, os
 
 # Create your views here.
 
@@ -52,7 +52,7 @@ def post_detail(request, post_id):
         for comment in comment_list:
             comment.has_read = True
             comment.save()
-    return render(request, 'blog/post_detail.html', 
+    return render(request, 'blog/post_detail.html',
             {'post': post, 'form': form, 'comment_list': comment_list, 'comment_count': comment_count})
 
 def post_new_comment(request, post_id):
@@ -92,7 +92,7 @@ def post_edit(request, post_id):
             post.author = request.user
             post.tags = form.cleaned_data['tags']
             post.save()
-            return redirect('blog:post_detail', post_id=post.id)
+            return redirect('blog:post_detail')
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
@@ -105,7 +105,7 @@ def post_publish(request, post_id):
 
 def post_draft_list(request):
     posts = Post.objects.filter(published_date__isnull=True).order_by('-create_date')
-    return render(request, 'blog/post_draft_list.html', {'posts': posts}) 
+    return render(request, 'blog/post_draft_list.html', {'posts': posts})
 def post_remove(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     post.delete()
@@ -177,7 +177,29 @@ def get_tag_cloud_list(resuest):
 
 def get_recent_posts_list(request):
     response_data = {};
-    posts = Post.objects.filter(published_date__isnull=False).order_by('-published_date')[:8]
+    posts = Post.objects.filter(published_date__isnull=False).order_by('-published_date')[:5]
     response_data['title'] = [post.title for post in posts]
     response_data['id'] = [post.pk for post in posts]
     return JsonResponse(response_data)
+
+
+# Upload file
+def upload_file(request):
+    file_list = []
+    for root, dirs, files in os.walk('media'):
+        for f in files:
+            file_list.append(os.path.join(root, f))
+    if request.method == "POST":
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            storage_file(request.FILES['file'], request.POST['filename'])
+            return redirect('blog:upload_file')
+    else:
+        form = UploadFileForm()
+    return render(request, 'blog/upload_file.html', {'form': form, 'file_list': file_list})
+
+def storage_file(file, filename):
+    print(file.name)
+    with open(os.path.join('media', filename), 'wb+') as f:
+        for chunk in file.chunks():
+            f.write(chunk)

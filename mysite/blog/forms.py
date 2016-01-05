@@ -33,3 +33,7 @@ class MessageForm(forms.ModelForm):
             'email': forms.TextInput(attrs={'class': "form-control"}),
             'message': forms.Textarea(attrs={'class': "form-control"}),
         }
+
+class UploadFileForm(forms.Form):
+    filename = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=50)
+    file = forms.FileField()

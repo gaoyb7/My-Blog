@@ -6,6 +6,7 @@ urlpatterns = [
         url(r'^$', views.main_page, name='main_page'),
         url(r'^ajax/get', views.ajax_get_test, name='ajax_get_test'),
         url(r'^ajax/post', views.ajax_post_test, name='ajax_post_test'),
+        url(r'^upload_file$', views.upload_file, name='upload_file'),
         url(r'^post$', views.post_list, name='post_list'),
         url(r'^post/new$', views.post_new, name='post_new'),
         url(r'^post/get_tag_cloud_list$', views.get_tag_cloud_list, name='get_tag_cloud_list'),

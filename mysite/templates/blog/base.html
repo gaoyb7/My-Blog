@@ -70,7 +70,12 @@
 		<ul class="nav navbar-nav navbar-right">
 			{% if user.is_authenticated %}
 			<li>
-				<a href="/post/recent_comments?action=showlist" data-toggle="tooltip" data-placement="left" title="Comments" id="recent-comments">
+				<a href="{% url 'blog:upload_file' %}" data-toggle="tooltip" data-placement="left" title="Upload files">
+					<span class="glyphicon glyphicon-upload"></span>
+				</a>
+			</li>
+			<li>
+				<a href="{% url 'blog:recent_comments' %}?action=showlist" data-toggle="tooltip" data-placement="left" title="Comments" id="recent-comments">
 					<span class="glyphicon glyphicon-comment"></span>
 				</a>
 			</li>

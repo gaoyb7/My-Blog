@@ -1,0 +1,32 @@
+{% extends 'blog/base.html' %}
+
+{% block blog-main %}
+{% if form %}
+{{ form.media }}
+{% endif %}
+<div class="row">
+	<h3>Upload File:</h3>
+	<form method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		{% for field in form %}
+		<div class="form-group">
+			{{ field.errors }}
+			{{ field.label_tag }}
+			{{ field }}
+		</div>
+		{% endfor %}
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+</div>
+
+<div class="row">
+	<hr>
+	<h3>File List</h3>
+	<ul class="list-group">
+		{% for file in file_list %}
+		<li class=list-group-item>{{ file }}</li>
+		{% endfor %}
+	</ul>
+</div>
+
+{% endblock %}
