@@ -193,14 +193,23 @@ def upload_file(request):
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            storage_file(request.FILES['file'], request.POST['filename'])
-            return redirect('blog:upload_file')
+            rescode = storage_file(request.FILES['file'], request.POST['filename'])
+            response = redirect('blog:upload_file')
+            if rescode == 0:
+                return response
+            elif rescode == 1:
+                response['Location'] += '?error=repetition'
+                return response
     else:
         form = UploadFileForm()
+        if request.GET.get('error'):
+            return render(request, 'blog/upload_file.html', {'form': form, 'file_list': file_list, 'error':'File exists'})
     return render(request, 'blog/upload_file.html', {'form': form, 'file_list': file_list})
 
 def storage_file(file, filename):
-    print(file.name)
+    if os.path.exists(os.path.join('media', filename)):
+        return 1
     with open(os.path.join('media', filename), 'wb+') as f:
         for chunk in file.chunks():
             f.write(chunk)
+    return 0
