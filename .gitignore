@@ -60,4 +60,4 @@ target/
 mysite/db.sqlite3
 mysite/mysite/settings.py
 mysite/static/ckeditor/
-media/
+mysite/media/
