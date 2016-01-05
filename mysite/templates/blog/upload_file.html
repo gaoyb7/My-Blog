@@ -5,28 +5,40 @@
 {{ form.media }}
 {% endif %}
 <div class="row">
-	<h3>Upload File:</h3>
-	<form method="POST" enctype="multipart/form-data">
-		{% csrf_token %}
-		{% for field in form %}
-		<div class="form-group">
-			{{ field.errors }}
-			{{ field.label_tag }}
-			{{ field }}
-		</div>
-		{% endfor %}
-		<button type="submit" class="btn btn-primary">Submit</button>
-	</form>
+	<div class="col-md-9">
+		<h3>Upload File:</h3>
+		<form method="POST" enctype="multipart/form-data" id="upload-file-form">
+			{% csrf_token %}
+			{% for field in form %}
+			<div class="form-group">
+				{{ field.errors }}
+				{{ field.label_tag }}
+				{{ field }}
+			</div>
+			{% endfor %}
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
 </div>
 
 <div class="row">
-	<hr>
-	<h3>File List</h3>
-	<ul class="list-group">
-		{% for file in file_list %}
-		<li class=list-group-item><a href="{{ file }}">{{ file }}</a></li>
-		{% endfor %}
-	</ul>
+	<div class="col-md-9">
+		<hr>
+		<h3>File List:</h3>
+		<ul class="list-group">
+			{% for file in file_list %}
+			<li class=list-group-item><span><a href="{{ file }}">{{ file }}</a></span> <span><a class="pull-right" href="" style="color:red;">delete</a></span></li>
+			{% endfor %}
+		</ul>
+	</div>
 </div>
+
+<script>
+	$(document).ready(function() {
+		$('#id_file').change(function() {
+			$('#id_filename').val($(this).val())
+		});
+	});
+</script>
 
 {% endblock %}
