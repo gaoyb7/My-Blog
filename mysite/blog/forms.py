@@ -1,6 +1,5 @@
 from django import forms
 from .models import Post, Comment, Message
-from bootstrap_markdown.widgets import MarkdownEditor
 
 class PostForm(forms.ModelForm):
     class Meta:
