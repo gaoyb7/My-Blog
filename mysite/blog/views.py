@@ -184,6 +184,7 @@ def get_recent_posts_list(request):
 
 
 # Upload file
+@login_required
 def upload_file(request):
     file_list = []
     for root, dirs, files in os.walk('media'):
