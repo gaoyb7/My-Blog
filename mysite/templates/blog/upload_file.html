@@ -24,7 +24,7 @@
 	<h3>File List</h3>
 	<ul class="list-group">
 		{% for file in file_list %}
-		<li class=list-group-item>{{ file }}</li>
+		<li class=list-group-item><a href="{{ file }}">{{ file }}</a></li>
 		{% endfor %}
 	</ul>
 </div>
