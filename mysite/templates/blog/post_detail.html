@@ -96,7 +96,9 @@ Post - {{ post.title }}
 	</div>
 	{% endif  %}
 </div>
+{% endblock %}
 
+{% block script %}
 <script>
 $(document).ready(function() {
 	$('#comment-submit').click(function() {
