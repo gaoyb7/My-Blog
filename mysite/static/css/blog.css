@@ -13,6 +13,7 @@ pre, code {
 
 footer {
     margin: 50px;
+    text-align: center;
 }
 
 .post-header, .well h4, .panel-title {
@@ -41,4 +42,8 @@ p.tag-list {
 	font-size: 15px;
 	font-family: Georgia, Times, "Times New Roman", serif;
 	text-align: left;
+}
+
+.form-control {
+    min-width: 100%;
 }

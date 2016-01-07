@@ -6,95 +6,96 @@ Post - {{ post.title }}
 {% endblock %}
 
 {% block blog-main %}
-<div class="row post-main">
+<div class="row">
+	<div class="post-main">
+		<div class="post-header">
+			{% if not post.published_date %}
+			<div class="alert alert-warning" role="alert">The article has not yet been released</div>
+			{% endif %}
+			<h1 class="blog-post-title"><a href="{% url 'blog:post_detail' post_id=post.id %}">{{ post.title }}</a></h1>
 
-	<div class="post-header">
-		{% if not post.published_date %}
-		<div class="alert alert-warning" role="alert">The article has not yet been released</div>
+			<p class="tag-list">
+				Tags:
+				{% for tg in post.get_tag_list %}
+				<a href="{% url 'blog:get_tag_post_list' tagname=tg %}" style="text-decoration: none;"><span class="label label-info">{{ tg }}</span></a>
+				{% endfor %}
+			</p>
+
+			{% if post.published_date %}
+			<p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }}<span class="pull-right">Visited: {{ post.visited }}</span></p>
+			{% else  %}
+			<p><span class="glyphicon glyphicon-time"></span> Created on {{ post.create_date }}</p>
+			{% endif %}
+		</div>
+
+		<hr>
+		<div id="post-text">
+			{{ post.text | custom_markdown }}
+		</div>
+		<br>
+		<br>
+
+		<div align="right">
+			<a type="button" class="btn btn-success" id="like-post"> <span class="glyphicon glyphicon-thumbs-up"></span> {{ post.like }} </a>
+			<a type="button" class="btn btn-danger" id="dislike-post"> <span class="glyphicon glyphicon-thumbs-down"></span> {{ post.dislike }} </a>
+			<a href="#new-comment-modal" type="button" class="btn btn-primary" data-toggle="modal"> <span class="glyphicon glyphicon-comment"></span> Comment</a>
+		</div>
+
+		{% if user.is_authenticated %}
+		<hr>
+		<div align="right">
+			{% if not post.published_date %}
+			<a class="btn btn-default" href="{% url 'blog:post_publish' post_id=post.id %}">Publish</a>
+			{% endif %}
+			<a class="btn btn-default" href="{% url 'blog:post_edit' post_id=post.id %}">Edit</a>
+			<a class="btn btn-default" href="{% url 'blog:post_remove' post_id=post.id %}">Delete</a>
+		</div>
 		{% endif %}
-		<h1 class="blog-post-title"><a href="{% url 'blog:post_detail' post_id=post.id %}">{{ post.title }}</a></h1>
 
-		<p class="tag-list">
-		Tags:
-		{% for tg in post.get_tag_list %}
-		<a href="{% url 'blog:get_tag_post_list' tagname=tg %}" style="text-decoration: none;"><span class="label label-info">{{ tg }}</span></a>
-		{% endfor %}
-		</p>
-
-		{% if post.published_date %}
-		<p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }}<span class="pull-right">Visited: {{ post.visited }}</span></p>
-		{% else  %}
-		<p><span class="glyphicon glyphicon-time"></span> Created on {{ post.create_date }}</p>
-		{% endif %}
-	</div>
-
-	<hr>
-	<div id="post-text">
-		{{ post.text | custom_markdown }}
-	</div>
-	<br>
-	<br>
-
-	<div align="right">
-		<a type="button" class="btn btn-success" id="like-post"> <span class="glyphicon glyphicon-thumbs-up"></span> {{ post.like }} </a>
-		<a type="button" class="btn btn-danger" id="dislike-post"> <span class="glyphicon glyphicon-thumbs-down"></span> {{ post.dislike }} </a>
-		<a href="#new-comment-modal" type="button" class="btn btn-primary" data-toggle="modal"> <span class="glyphicon glyphicon-comment"></span> Comment</a>
-	</div>
-
-	{% if user.is_authenticated %}
-	<hr>
-	<div align="right">
-		{% if not post.published_date %}
-		<a class="btn btn-default" href="{% url 'blog:post_publish' post_id=post.id %}">Publish</a>
-		{% endif %}
-		<a class="btn btn-default" href="{% url 'blog:post_edit' post_id=post.id %}">Edit</a>
-		<a class="btn btn-default" href="{% url 'blog:post_remove' post_id=post.id %}">Delete</a>
-	</div>
-	{% endif %}
-
-	<div class="modal fade" id="new-comment-modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">New comment</h4>
-				</div>
-				<div class="modal-body">
-					<form method="POST" id="new-comment" onsubmit="return false;">
-						{% csrf_token %}
-						{% for field in form %}
-						<div class="form-group">
-							{# {{ field.errors }} #}
-							{{ field.label_tag }}
-							{{ field }}
-						</div>
-						{% endfor %}
-						<button class="btn btn-primary" id="comment-submit">Submit</button>
-					</form>
+		<div class="modal fade" id="new-comment-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">New comment</h4>
+					</div>
+					<div class="modal-body">
+						<form method="POST" id="new-comment" onsubmit="return false;">
+							{% csrf_token %}
+							{% for field in form %}
+							<div class="form-group">
+								{# {{ field.errors }} #}
+								{{ field.label_tag }}
+								{{ field }}
+							</div>
+							{% endfor %}
+							<button class="btn btn-primary" id="comment-submit">Submit</button>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	{% if comment_count > 0 %}
-	<div class="row comment-list">
-		<hr>
-		{% for comment in comment_list %}
-		<div class="media" id="comment-id-{{ comment.id }}" >
-			<a class="pull-left" data-toggle="tooltip" data-placement="left" title="{{ comment.email }}">
-				<img class="media-object" src="{% static 'img/3frdQ2L.png' %}" alt="">
-			</a>
-			<div class="media-body">
-				<h4 class="media-heading"> {{ comment.username }}
-					<small>{{ comment.date_time }}</small>
-				</h4>
-				{{ comment.comment }}
+		{% if comment_count > 0 %}
+		<div class="row comment-list">
+			<hr>
+			{% for comment in comment_list %}
+			<div class="media" id="comment-id-{{ comment.id }}" >
+				<a class="pull-left" data-toggle="tooltip" data-placement="left" title="{{ comment.email }}">
+					<img class="media-object" src="{% static 'img/3frdQ2L.png' %}" alt="">
+				</a>
+				<div class="media-body">
+					<h4 class="media-heading"> {{ comment.username }}
+						<small>{{ comment.date_time }}</small>
+					</h4>
+					{{ comment.comment }}
+				</div>
 			</div>
+			{% endfor %}
+			<hr>
 		</div>
-		{% endfor %}
-		<hr>
+		{% endif  %}
 	</div>
-	{% endif  %}
 </div>
 {% endblock %}
 
@@ -115,49 +116,49 @@ $(document).ready(function() {
 
 			if (ele.val().trim() === "") {
 				$(p).addClass('has-error').append(
-						'<span class="help-block">' + $(lab).attr('for').substring(3) + ' field is empty</span>');
-				is_valid = false;
-			}
-		});
-
-		if (is_valid) {
-			var post_data = {
-				'csrfmiddlewaretoken': '{{ csrf_token }}',
-				'username': username,
-				'email': email,
-				'comment': comment
-			};
-			$.post("{% url 'blog:post_new_comment' post_id=post.id %}", post_data, function(data, status) {
-				if (data === "success") {
-					window.location.href="{% url 'blog:post_detail' post_id=post.id %}";
-				} else {
-					$('#id_email').closest('.form-group').addClass('has-error').append(
-						'<span class="help-block">Please enter a valid email address.</span>');
+					'<span class="help-block">' + $(lab).attr('for').substring(3) + ' field is empty</span>');
+					is_valid = false;
 				}
 			});
-		}
-	});
 
-	$('#like-post').click(function() {
-		var post_data = {'csrfmiddlewaretoken': '{{ csrf_token }}'};
-		$.post("{% url 'blog:post_like' post_id=post.id %}", post_data, function(data, status) {
-			if (status === "success") {
-				$('#like-post').html('<span class="glyphicon glyphicon-thumbs-up"></span> ' + data);
-			}
+			if (is_valid) {
+				var post_data = {
+					'csrfmiddlewaretoken': '{{ csrf_token }}',
+					'username': username,
+					'email': email,
+					'comment': comment
+				};
+				$.post("{% url 'blog:post_new_comment' post_id=post.id %}", post_data, function(data, status) {
+					if (data === "success") {
+						window.location.href="{% url 'blog:post_detail' post_id=post.id %}";
+					} else {
+						$('#id_email').closest('.form-group').addClass('has-error').append(
+							'<span class="help-block">Please enter a valid email address.</span>');
+						}
+					});
+				}
+			});
+
+			$('#like-post').click(function() {
+				var post_data = {'csrfmiddlewaretoken': '{{ csrf_token }}'};
+				$.post("{% url 'blog:post_like' post_id=post.id %}", post_data, function(data, status) {
+					if (status === "success") {
+						$('#like-post').html('<span class="glyphicon glyphicon-thumbs-up"></span> ' + data);
+					}
+				});
+			});
+
+			$('#dislike-post').click(function() {
+				var post_data = {'csrfmiddlewaretoken': '{{ csrf_token }}'};
+				$.post("{% url 'blog:post_dislike' post_id=post.id %}", post_data, function(data, status) {
+					if (status === "success") {
+						$('#dislike-post').html('<span class="glyphicon glyphicon-thumbs-down"></span> ' + data);
+					}
+				});
+			});
+
+			$('#post-text table').addClass('table table-bordered');
 		});
-	});
-
-	$('#dislike-post').click(function() {
-		var post_data = {'csrfmiddlewaretoken': '{{ csrf_token }}'};
-		$.post("{% url 'blog:post_dislike' post_id=post.id %}", post_data, function(data, status) {
-			if (status === "success") {
-				$('#dislike-post').html('<span class="glyphicon glyphicon-thumbs-down"></span> ' + data);
-			}
-		});
-	});
-
-	$('#post-text table').addClass('table table-bordered');
-});
-</script>
-<script src="//cdn.bootcss.com/markdown.js/0.5.0/markdown.min.js"></script>
-{% endblock %}
+		</script>
+		<script src="//cdn.bootcss.com/markdown.js/0.5.0/markdown.min.js"></script>
+		{% endblock %}

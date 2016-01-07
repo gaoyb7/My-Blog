@@ -5,7 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>{% block title %} Index - gaoyb7's blog{% endblock %}</title>
+	<title>{% block title %} Index - gaoyb7's blog {% endblock %}</title>
 	<link href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 	<link href="data:text/css;charset=utf-8," data-href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" rel="stylesheet" id="bs-theme-stylesheet">
 	<link href="//cdn.bootcss.com/highlight.js/8.9.1/styles/github.min.css" rel="stylesheet">
@@ -42,101 +42,94 @@
 				<ul class="nav navbar-nav">
 					<li><a href="{% url 'blog:post_list' %}" id="posts-navbar">Posts</a></li>
 					{% if user.is_authenticated %}
-					<!--<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Test menu<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-					<li><a id="ajax-get-test" href="#">Ajax Get method</a></li>
-					<li><a id="ajax-post-test" href="#">Ajax Post method</a></li>
-					<li><a href="#modal-demo" role="button" class="btn" data-toggle="modal">Launch demo modal</a></li>
+					{% endif %}
+					<li><a href="{% url 'blog:message_board' %}">Message Board</a></li>
+					<li><a href="{% url 'blog:about_me' %}">About</a></li>
 				</ul>
-			</li>-->
-			{% endif %}
-			<li><a href="{% url 'blog:message_board' %}">Message Board</a></li>
-			<li><a href="{% url 'blog:about_me' %}">About</a></li>
-		</ul>
 
-		<ul class="nav navbar-nav navbar-right">
-			{% if user.is_authenticated %}
-			<li>
-				<a href="{% url 'blog:upload_file' %}" data-toggle="tooltip" data-placement="left" title="Upload files">
-					<span class="glyphicon glyphicon-upload"></span>
-				</a>
-			</li>
-			<li>
-				<a href="{% url 'blog:recent_comments' %}?action=showlist" data-toggle="tooltip" data-placement="left" title="Comments" id="recent-comments">
-					<span class="glyphicon glyphicon-comment"></span>
-				</a>
-			</li>
-			<li>
-				<a href="{% url 'blog:post_new' %}" data-toggle="tooltip" data-placement="left" title="New Post">
-					<span class="glyphicon glyphicon-plus"></span>
-				</a>
-			</li>
-			<li>
-				<a href="{% url 'blog:post_draft_list' %}" data-toggle="tooltip" data-placement="left" title="Draft list">
-					<span class="glyphicon glyphicon-edit"></span>
-				</a>
-			</li>
-			<li>
-				<a href="{% url 'django.contrib.auth.views.logout' %}" data-toggle="tooltip" data-placement="left" title="Logout">
-					<span class="glyphicon glyphicon-log-out"></span>
-				</a>
-			</li>
-			<script>
-			$(document).ready(function() {
-				var p = $('#recent-comments');
-				$.get('/post/recent_comments', {action: 'comments_count'}, function(data) {
-					if (data != "0")
-					p.append('<span class="badge">' + data + '</span>');
-				});
-			});
-			</script>
-			{% else %}
-			<li>
-				<a href="{% url 'django.contrib.auth.views.login' %}" data-toggle="tooltip" data-placement="left" title="Login">
-					<span class="glyphicon glyphicon-lock"></span>
-				</a>
-			</li>
-			{% endif %}
-		</ul>
-	</div>
-</div>
-</nav>
-
-<div class="container">
-	<div class="row">
-		<div class="col-md-9">
-			{% block blog-main %}
-			{% endblock %}
+				<ul class="nav navbar-nav navbar-right">
+					{% if user.is_authenticated %}
+					<li>
+						<a href="{% url 'blog:upload_file' %}" data-toggle="tooltip" data-placement="left" title="Upload files">
+							<span class="glyphicon glyphicon-upload"></span>
+						</a>
+					</li>
+					<li>
+						<a href="{% url 'blog:recent_comments' %}?action=showlist" data-toggle="tooltip" data-placement="left" title="Comments" id="recent-comments">
+							<span class="glyphicon glyphicon-comment"></span>
+						</a>
+					</li>
+					<li>
+						<a href="{% url 'blog:post_new' %}" data-toggle="tooltip" data-placement="left" title="New Post">
+							<span class="glyphicon glyphicon-plus"></span>
+						</a>
+					</li>
+					<li>
+						<a href="{% url 'blog:post_draft_list' %}" data-toggle="tooltip" data-placement="left" title="Draft list">
+							<span class="glyphicon glyphicon-edit"></span>
+						</a>
+					</li>
+					<li>
+						<a href="{% url 'django.contrib.auth.views.logout' %}" data-toggle="tooltip" data-placement="left" title="Logout">
+							<span class="glyphicon glyphicon-log-out"></span>
+						</a>
+					</li>
+					<script>
+					$(document).ready(function() {
+						var p = $('#recent-comments');
+						$.get('/post/recent_comments', {action: 'comments_count'}, function(data) {
+							if (data != "0") {
+								p.append('<span class="badge">' + data + '</span>');
+							}
+						});
+					});
+					</script>
+					{% else %}
+					<li>
+						<a href="{% url 'django.contrib.auth.views.login' %}" data-toggle="tooltip" data-placement="left" title="Login">
+							<span class="glyphicon glyphicon-lock"></span>
+						</a>
+					</li>
+					{% endif %}
+				</ul>
+			</div>
 		</div>
+	</nav>
 
-		<div class="col-md-3">
-			{% block blog-sidebar %}
-			<!-- Recent Posts -->
-			<div class="panel panel-default navbar-wrapper">
-				<div class="panel-heading">
-					<h3 class="panel-title">Recent Posts</h3>
-				</div>
-				<div class="panel-body">
-					<ul class="list-unstyled" id="recent-posts-list">
-					</ul>
-				</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9">
+				{% block blog-main %}
+				{% endblock %}
 			</div>
 
-			<!-- Tag Cloud -->
-			<div class="panel panel-default navbar-wrapper">
-				<div class="panel-heading">
-					<h3 class="panel-title">Tag Cloud</h3>
-				</div>
-				<div class="panel-body">
-					<div id="tag-cloud-list">
+			<div class="col-md-3">
+				{% block blog-sidebar %}
+				<!-- Recent Posts -->
+				<div class="panel panel-default navbar-wrapper">
+					<div class="panel-heading">
+						<h3 class="panel-title">Recent Posts</h3>
+					</div>
+					<div class="panel-body">
+						<ul class="list-unstyled" id="recent-posts-list">
+						</ul>
 					</div>
 				</div>
+
+				<!-- Tag Cloud -->
+				<div class="panel panel-default navbar-wrapper">
+					<div class="panel-heading">
+						<h3 class="panel-title">Tag Cloud</h3>
+					</div>
+					<div class="panel-body">
+						<div id="tag-cloud-list">
+						</div>
+					</div>
+				</div>
+				{% endblock %}
 			</div>
-			{% endblock %}
 		</div>
 	</div>
-</div>
 </body>
 
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
