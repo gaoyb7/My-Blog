@@ -12,7 +12,7 @@ import json, os
 
 # Main Page
 def main_page(request):
-    return render(request, 'blog/main_page.html');
+    return render(request, 'blog/main_page.html')
 
 # Posts
 def post_list(request):

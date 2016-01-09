@@ -15,10 +15,10 @@ Post - {{ post.title }}
 			<h1 class="blog-post-title"><a href="{% url 'blog:post_detail' post_id=post.id %}">{{ post.title }}</a></h1>
 
 			<p class="tag-list">
-				Tags:
-				{% for tg in post.get_tag_list %}
-				<a href="{% url 'blog:get_tag_post_list' tagname=tg %}" style="text-decoration: none;"><span class="label label-info">{{ tg }}</span></a>
-				{% endfor %}
+			Tags:
+			{% for tg in post.get_tag_list %}
+			<a href="{% url 'blog:get_tag_post_list' tagname=tg %}" style="text-decoration: none;"><span class="label label-info">{{ tg }}</span></a>
+			{% endfor %}
 			</p>
 
 			{% if post.published_date %}
@@ -116,51 +116,51 @@ $(document).ready(function() {
 
 			if (ele.val().trim() === "") {
 				$(p).addClass('has-error').append(
-					'<span class="help-block">' + $(lab).attr('for').substring(3) + ' field is empty</span>');
-					is_valid = false;
-				}
-			});
-
-			if (is_valid) {
-				var post_data = {
-					'csrfmiddlewaretoken': '{{ csrf_token }}',
-					'username': username,
-					'email': email,
-					'comment': comment
-				};
-				$.post("{% url 'blog:post_new_comment' post_id=post.id %}", post_data, function(data, status) {
-					if (data === "success") {
-						window.location.href="{% url 'blog:post_detail' post_id=post.id %}";
-					} else {
-						$('#id_email').closest('.form-group').addClass('has-error').append(
-							'<span class="help-block">Please enter a valid email address.</span>');
-						}
-					});
-				}
-			});
-
-			$('#like-post').click(function() {
-				var post_data = {'csrfmiddlewaretoken': '{{ csrf_token }}'};
-				$.post("{% url 'blog:post_like' post_id=post.id %}", post_data, function(data, status) {
-					if (status === "success") {
-						alert('Thank you!');
-						$('#like-post').html('<span class="glyphicon glyphicon-thumbs-up"></span> ' + data);
-					}
-				});
-			});
-
-			$('#dislike-post').click(function() {
-				var post_data = {'csrfmiddlewaretoken': '{{ csrf_token }}'};
-				$.post("{% url 'blog:post_dislike' post_id=post.id %}", post_data, function(data, status) {
-					if (status === "success") {
-						alert('Please comment below to make it better.');
-						$('#dislike-post').html('<span class="glyphicon glyphicon-thumbs-down"></span> ' + data);
-					}
-				});
-			});
-
-			$('#post-text table').addClass('table table-bordered table-striped');
+						'<span class="help-block">' + $(lab).attr('for').substring(3) + ' field is empty</span>');
+				is_valid = false;
+			}
 		});
-		</script>
-		<script src="//cdn.bootcss.com/markdown.js/0.5.0/markdown.min.js"></script>
-		{% endblock %}
+
+		if (is_valid) {
+			var post_data = {
+				'csrfmiddlewaretoken': '{{ csrf_token }}',
+				'username': username,
+				'email': email,
+				'comment': comment
+			};
+			$.post("{% url 'blog:post_new_comment' post_id=post.id %}", post_data, function(data, status) {
+				if (data === "success") {
+					window.location.href="{% url 'blog:post_detail' post_id=post.id %}";
+				} else {
+					$('#id_email').closest('.form-group').addClass('has-error').append(
+							'<span class="help-block">Please enter a valid email address.</span>');
+				}
+			});
+		}
+	});
+
+	$('#like-post').click(function() {
+		var post_data = {'csrfmiddlewaretoken': '{{ csrf_token }}'};
+		$.post("{% url 'blog:post_like' post_id=post.id %}", post_data, function(data, status) {
+			if (status === "success") {
+				alert('Thank you!');
+				$('#like-post').html('<span class="glyphicon glyphicon-thumbs-up"></span> ' + data);
+			}
+		});
+	});
+
+	$('#dislike-post').click(function() {
+		var post_data = {'csrfmiddlewaretoken': '{{ csrf_token }}'};
+		$.post("{% url 'blog:post_dislike' post_id=post.id %}", post_data, function(data, status) {
+			if (status === "success") {
+				alert('Please comment below to make it better.');
+				$('#dislike-post').html('<span class="glyphicon glyphicon-thumbs-down"></span> ' + data);
+			}
+		});
+	});
+
+	$('#post-text table').addClass('table table-bordered table-striped');
+});
+</script>
+<script src="//cdn.bootcss.com/markdown.js/0.5.0/markdown.min.js"></script>
+{% endblock %}

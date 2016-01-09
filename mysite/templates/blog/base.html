@@ -75,16 +75,6 @@
 								<span class="glyphicon glyphicon-log-out"></span>
 							</a>
 						</li>
-						<script>
-$(document).ready(function() {
-	var p = $('#recent-comments');
-	$.get('/post/recent_comments', {action: 'comments_count'}, function(data) {
-		if (data != "0") {
-			p.append('<span class="badge">' + data + '</span>');
-		}
-	});
-});
-						</script>
 						{% else %}
 						<li>
 							<a href="{% url 'django.contrib.auth.views.login' %}" data-toggle="tooltip" data-placement="left" title="Login">
@@ -142,6 +132,17 @@ MathJax.Hub.Config({
 });
 		</script>
 		<script src="{% static 'js/main.js' %}"></script>
+
+		<script>
+$(document).ready(function() {
+	var p = $('#recent-comments');
+	$.get('/post/recent_comments', {action: 'comments_count'}, function(data) {
+		if (data != "0") {
+			p.append('<span class="badge">' + data + '</span>');
+		}
+	});
+});
+		</script>
 
 		{% block script %}
 		{% endblock %}

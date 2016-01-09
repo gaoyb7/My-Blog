@@ -23,18 +23,18 @@ $(document).ready(function() {
 	});
 
 	if ($('#tag-cloud-list').length) {
-		$.get('/post/get_tag_cloud_list', function(data, status) { 
-			if (status === "success") { 
-				var tag_list = data.tag_list; 
-				var count = data.count; 
+		$.get('/post/get_tag_cloud_list', function(data, status) {
+			if (status === "success") {
+				var tag_list = data.tag_list;
+				var count = data.count;
 				var font_size = data.size;
-				var p = $('#tag-cloud-list'); 
-				for (var i = 0; i < tag_list.length; ++i) { 
+				var p = $('#tag-cloud-list');
+				for (var i = 0; i < tag_list.length; ++i) {
 					var tag_node = '<a href="' + '/tag/' + tag_list[i] + '" style="font-size:' + font_size[i] + 'pt;">' + tag_list[i] + '</a> ';
 					p.append(tag_node);
-				} 
-			} 
-		}); 
+				}
+			}
+		});
 	}
 
 	if ($('#recent-posts-list').length) {
@@ -42,7 +42,7 @@ $(document).ready(function() {
 			if (status === "success") {
 				var p = $('#recent-posts-list');
 				for (var i = 0; i < data.id.length; ++i) {
-					p.append('<li><a href="' + '/post/' + data.id[i] + '/">' + 
+					p.append('<li><a href="' + '/post/' + data.id[i] + '/">' +
 						data.title[i] + '</a></li>');
 				}
 			}
