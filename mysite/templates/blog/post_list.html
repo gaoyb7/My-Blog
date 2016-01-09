@@ -19,7 +19,7 @@ Posts list
 			<p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.published_date }}<span class="pull-right">Visited: {{ post.visited }}</span></p>
 		</div>
 		<hr>
-		<div class="post-body">
+		<div class="post-content">
 			{{ post.text|custom_markdown|truncatewords_html:100 }}
 		</div>
 		<div align="right">

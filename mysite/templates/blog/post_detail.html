@@ -29,7 +29,7 @@ Post - {{ post.title }}
 		</div>
 
 		<hr>
-		<div id="post-text">
+		<div class="post-content">
 			{{ post.text | custom_markdown }}
 		</div>
 		<br>
@@ -160,7 +160,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#post-text table').addClass('table table-bordered table-striped');
+	$('.post-content table').addClass('table table-bordered table-striped');
 });
 </script>
 {% endblock %}
