@@ -92,7 +92,7 @@ def post_edit(request, post_id):
             post.author = request.user
             post.tags = form.cleaned_data['tags']
             post.save()
-            return redirect('blog:post_detail')
+            return redirect('blog:post_detail', post_id=post.id)
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})

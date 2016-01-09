@@ -100,6 +100,7 @@ Post - {{ post.title }}
 {% endblock %}
 
 {% block script %}
+<script src="//cdn.bootcss.com/markdown.js/0.5.0/markdown.min.js"></script>
 <script>
 $(document).ready(function() {
 	$('#comment-submit').click(function() {
@@ -162,5 +163,4 @@ $(document).ready(function() {
 	$('#post-text table').addClass('table table-bordered table-striped');
 });
 </script>
-<script src="//cdn.bootcss.com/markdown.js/0.5.0/markdown.min.js"></script>
 {% endblock %}

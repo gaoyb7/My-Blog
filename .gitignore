@@ -61,4 +61,5 @@ mysite/db.sqlite3
 mysite/mysite/settings.py
 mysite/static/ckeditor/
 mysite/media/
+mysite/.tern-project
 tags
