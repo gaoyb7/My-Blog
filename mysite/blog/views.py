@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse, Http404
 from django.utils import timezone
 from .models import Post, Tag, Comment, Message
 from .forms import PostForm, CommentForm, MessageForm, UploadFileForm
@@ -42,8 +42,13 @@ def get_tag_post_list(request, tagname):
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    post.visited += 1
-    post.save()
+
+    if (post.published_date is None) and (not request.user.is_authenticated()):
+        raise Http404("Not Found")
+
+    if not (post.published_date is None) and not request.user.is_authenticated():
+        post.visited += 1
+        post.save()
     form = CommentForm()
 
     comment_list = Comment.objects.filter(post = post)
