@@ -135,12 +135,14 @@ MathJax.Hub.Config({
 
 		<script>
 $(document).ready(function() {
+	{% if user.is_authenticated %}
 	var p = $('#recent-comments');
 	$.get('/post/recent_comments', {action: 'comments_count'}, function(data) {
 		if (data != "0") {
 			p.append('<span class="badge">' + data + '</span>');
 		}
 	});
+	{% endif %}
 });
 		</script>
 
